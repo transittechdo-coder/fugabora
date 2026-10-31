@@ -1,0 +1,5 @@
+-- Applied to Supabase project "fugabora" on 31 Oct 2026.
+-- symptom_reports: anonymous reports for outbreak tracking (insert-only from the app)
+-- animals: farmer records, owner-only access (for sign-in sync in version 2)
+-- outbreak_summary: 30-day aggregate view
+-- See the Supabase dashboard > Database for the live definition.

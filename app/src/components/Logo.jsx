@@ -1,0 +1,19 @@
+// FugaBora mark: a cow's head inside a leaf-green disc.
+export default function Logo({ size = 36 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 40 40" aria-hidden="true" className="logo">
+      <circle cx="20" cy="20" r="19" fill="var(--accent)" />
+      <path
+        d="M9 13c2 0 4 1 5 3M31 13c-2 0-4 1-5 3M14 16h12c1.5 0 2.5 1.5 2 3l-2 7c-.7 2.5-3 4-6 4s-5.3-1.5-6-4l-2-7c-.5-1.5.5-3 2-3z"
+        fill="none"
+        stroke="var(--on-accent)"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="17" cy="21" r="1.4" fill="var(--on-accent)" />
+      <circle cx="23" cy="21" r="1.4" fill="var(--on-accent)" />
+      <path d="M17.5 26.5h5" stroke="var(--on-accent)" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  )
+}
