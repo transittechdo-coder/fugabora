@@ -1,78 +1,72 @@
-// Symptoms shown in the checker. "for" lists which animals the sign applies to.
-// danger: true means the sign alone triggers "call a vet now".
+// Shared symptom vocabulary. `danger: true` triggers the "call a vet now" alert on its own.
+// `for` limits which animals see the symptom (omit = all).
+export const SYMPTOMS = {
+  sudden_death: { sw: 'Vifo vya ghafla', en: 'Sudden death', danger: true, cat: 'general' },
+  many_sick: { sw: 'Wengi wanaumwa kwa pamoja', en: 'Many sick at once', danger: true, cat: 'general' },
+  fever: { sw: 'Homa / mwili wa moto', en: 'Fever / hot body', cat: 'general' },
+  not_eating: { sw: 'Haili chakula', en: 'Not eating', cat: 'general' },
+  weak: { sw: 'Unyonge, kulala sana', en: 'Weak, lying down a lot', cat: 'general' },
+  weight_loss: { sw: 'Kukonda', en: 'Weight loss', cat: 'general' },
+  pale: { sw: 'Macho / fizi kupauka', en: 'Pale eyes or gums', cat: 'general' },
+  jaundice: { sw: 'Macho / fizi njano', en: 'Yellow eyes or gums', cat: 'general' },
+  swollen_nodes: { sw: 'Tezi kuvimba (chini ya sikio / bega)', en: 'Swollen lymph nodes (ear, shoulder)', cat: 'general', for: ['cattle'] },
 
-const ALL_MAMMALS = ['cattle', 'goat', 'sheep', 'pig', 'dog', 'cat', 'rabbit', 'donkey', 'camel']
-const RUMINANTS = ['cattle', 'goat', 'sheep', 'camel']
-const BIRDS = ['chicken', 'duck', 'turkey', 'guineafowl', 'pigeon']
+  cough: { sw: 'Kukohoa', en: 'Coughing', cat: 'breathing' },
+  hard_breathing: { sw: 'Kupumua kwa shida', en: 'Hard breathing', cat: 'breathing' },
+  nasal_discharge: { sw: 'Makamasi puani', en: 'Nasal discharge', cat: 'breathing' },
+  sneezing: { sw: 'Kupiga chafya', en: 'Sneezing', cat: 'breathing' },
+  neck_stretched: { sw: 'Kunyoosha shingo kupumua', en: 'Neck stretched to breathe', cat: 'breathing' },
 
-export const SYMPTOM_GROUPS = {
-  general: { sw: 'Hali ya jumla', en: 'General' },
-  gut: { sw: 'Tumbo na kinyesi', en: 'Gut and droppings' },
-  breath: { sw: 'Kupumua', en: 'Breathing' },
-  skin: { sw: 'Ngozi, macho na mdomo', en: 'Skin, eyes and mouth' },
-  move: { sw: 'Kutembea na fahamu', en: 'Movement and behaviour' },
-  repro: { sw: 'Uzazi na maziwa', en: 'Breeding and milk' },
+  diarrhoea: { sw: 'Kuharisha', en: 'Diarrhoea', cat: 'gut' },
+  bloody_diarrhoea: { sw: 'Kuharisha damu', en: 'Bloody diarrhoea', cat: 'gut' },
+  green_diarrhoea: { sw: 'Kuharisha kijani', en: 'Green diarrhoea', cat: 'gut', for: ['chicken'] },
+  white_diarrhoea: { sw: 'Kuharisha cheupe majimaji', en: 'White watery diarrhoea', cat: 'gut', for: ['chicken'] },
+  yellow_diarrhoea: { sw: 'Kuharisha njano', en: 'Yellow diarrhoea', cat: 'gut', for: ['chicken'] },
+  vomiting: { sw: 'Kutapika', en: 'Vomiting', cat: 'gut', for: ['pig', 'dog', 'cat'] },
+  bloat: { sw: 'Tumbo kuvimba upande wa kushoto', en: 'Left belly swollen', danger: true, cat: 'gut', for: ['cattle', 'goat', 'sheep'] },
+  red_urine: { sw: 'Mkojo mwekundu / kahawia', en: 'Red or brown urine', cat: 'gut', for: ['cattle', 'goat', 'sheep'] },
+
+  mouth_sores: { sw: 'Vidonda mdomoni', en: 'Mouth sores', cat: 'skin' },
+  drooling: { sw: 'Kudondosha mate', en: 'Drooling', cat: 'skin' },
+  foot_blisters: { sw: 'Malengelenge kwatoni', en: 'Blisters on feet', cat: 'skin', for: ['cattle', 'goat', 'sheep', 'pig'] },
+  lame: { sw: 'Kuchechemea', en: 'Limping', cat: 'skin' },
+  skin_lumps: { sw: 'Vinundu ngozini', en: 'Lumps on skin', cat: 'skin' },
+  scabs: { sw: 'Vipele / magamba', en: 'Scabs or crusts', cat: 'skin' },
+  itching: { sw: 'Kuwashwa, manyoya kunyonyoka', en: 'Itching, hair loss', cat: 'skin' },
+  purple_skin: { sw: 'Ngozi zambarau (masikio, tumbo)', en: 'Purple skin (ears, belly)', danger: true, cat: 'skin', for: ['pig'] },
+  diamond_skin: { sw: 'Madoa mekundu ya pembe nne', en: 'Red diamond patches', cat: 'skin', for: ['pig'] },
+  muscle_swelling: { sw: 'Uvimbe wa moto mguuni unaolia ukibonyezwa', en: 'Hot leg swelling that crackles', danger: true, cat: 'skin', for: ['cattle'] },
+  swollen_face: { sw: 'Uso / midomo kuvimba', en: 'Swollen face or lips', cat: 'skin' },
+  bottle_jaw: { sw: 'Uvimbe chini ya taya', en: 'Swelling under jaw', cat: 'skin', for: ['goat', 'sheep', 'cattle'] },
+  comb_scabs: { sw: 'Vipele kwenye upanga', en: 'Scabs on comb', cat: 'skin', for: ['chicken'] },
+  ruffled: { sw: 'Manyoya kusimama, kusinzia', en: 'Ruffled feathers, sleepy', cat: 'skin', for: ['chicken'] },
+
+  twisted_neck: { sw: 'Shingo kupinda', en: 'Twisted neck', cat: 'brain', for: ['chicken'] },
+  circling: { sw: 'Kuzunguka, kugonga kichwa', en: 'Circling, head pressing', cat: 'brain' },
+  fits: { sw: 'Kifafa / kutetemeka', en: 'Fits or trembling', danger: true, cat: 'brain' },
+  aggression: { sw: 'Ukali usio wa kawaida, kuuma vitu', en: 'Unusual aggression, biting objects', danger: true, cat: 'brain', for: ['dog', 'cat', 'cattle'] },
+  cant_swallow: { sw: 'Kushindwa kumeza', en: 'Cannot swallow', danger: true, cat: 'brain', for: ['dog', 'cat', 'cattle'] },
+  paralysis: { sw: 'Kupooza', en: 'Paralysis', danger: true, cat: 'brain' },
+
+  abortion: { sw: 'Kutupa mimba', en: 'Abortion', cat: 'production', for: ['cattle', 'goat', 'sheep', 'pig'] },
+  milk_drop: { sw: 'Maziwa kupungua', en: 'Milk drop', cat: 'production', for: ['cattle', 'goat'] },
+  udder_swollen: { sw: 'Kiwele kuvimba / maziwa yenye mabonge', en: 'Swollen udder or clotted milk', cat: 'production', for: ['cattle', 'goat'] },
+  egg_drop: { sw: 'Mayai kupungua', en: 'Fewer eggs', cat: 'production', for: ['chicken'] },
+  blood_openings: { sw: 'Damu nyeusi puani / mdomoni baada ya kifo', en: 'Dark blood from nose or mouth after death', danger: true, cat: 'general', for: ['cattle', 'goat', 'sheep'] },
+  eye_discharge: { sw: 'Machozi / tongotongo', en: 'Eye discharge', cat: 'breathing' },
+  cloudy_eyes: { sw: 'Macho kuwa na ukungu', en: 'Cloudy eyes', cat: 'breathing', for: ['cattle'] },
 }
 
-export const SYMPTOMS = [
-  { id: 'sudden_death', g: 'general', sw: 'Vifo vya ghafla', en: 'Sudden death(s)', danger: true, for: [...ALL_MAMMALS, ...BIRDS] },
-  { id: 'many_sick', g: 'general', sw: 'Wanyama wengi wanaumwa kwa pamoja', en: 'Many animals sick at once', danger: true, for: [...ALL_MAMMALS, ...BIRDS] },
-  { id: 'fever', g: 'general', sw: 'Homa (mwili wa moto)', en: 'Fever (hot body)', for: ALL_MAMMALS },
-  { id: 'no_appetite', g: 'general', sw: 'Hali chakula', en: 'Not eating', for: [...ALL_MAMMALS, ...BIRDS] },
-  { id: 'weight_loss', g: 'general', sw: 'Kukonda', en: 'Losing weight', for: [...ALL_MAMMALS, ...BIRDS] },
-  { id: 'weak', g: 'general', sw: 'Udhaifu, kulala chini', en: 'Weak, lying down', for: [...ALL_MAMMALS, ...BIRDS] },
-  { id: 'pale', g: 'general', sw: 'Macho au fizi kupauka (weupe)', en: 'Pale eyes or gums', for: ALL_MAMMALS },
-  { id: 'yellow_eyes', g: 'general', sw: 'Macho ya njano', en: 'Yellow eyes or gums', for: RUMINANTS },
-  { id: 'swollen_nodes', g: 'general', sw: 'Tezi kuvimba (chini ya sikio, mbele ya bega)', en: 'Swollen lymph nodes (below ear, front of shoulder)', for: ['cattle'] },
-  { id: 'ruffled', g: 'general', sw: 'Manyoya kusimama, kusinzia', en: 'Ruffled feathers, sleepy', for: BIRDS },
-  { id: 'blood_openings', g: 'general', sw: 'Damu nyeusi puani, mdomoni au njia ya haja', en: 'Dark blood from nose, mouth or anus', danger: true, for: [...RUMINANTS, 'pig', 'donkey'] },
+export const SYMPTOM_CATS = {
+  general: { sw: 'Hali ya jumla', en: 'General' },
+  breathing: { sw: 'Kupumua na macho', en: 'Breathing and eyes' },
+  gut: { sw: 'Tumbo na kinyesi', en: 'Belly and droppings' },
+  skin: { sw: 'Ngozi, mdomo, miguu', en: 'Skin, mouth, feet' },
+  brain: { sw: 'Tabia na neva', en: 'Behaviour and nerves' },
+  production: { sw: 'Uzalishaji', en: 'Production' },
+}
 
-  { id: 'diarrhoea', g: 'gut', sw: 'Kuharisha', en: 'Diarrhoea', for: [...ALL_MAMMALS] },
-  { id: 'bloody_diarrhoea', g: 'gut', sw: 'Kuharisha damu', en: 'Bloody diarrhoea', for: [...ALL_MAMMALS] },
-  { id: 'green_droppings', g: 'gut', sw: 'Kinyesi cha kijani', en: 'Green droppings', for: BIRDS },
-  { id: 'white_droppings', g: 'gut', sw: 'Kinyesi cheupe, majimaji', en: 'White watery droppings', for: BIRDS },
-  { id: 'bloody_droppings', g: 'gut', sw: 'Kinyesi chenye damu', en: 'Bloody droppings', for: BIRDS },
-  { id: 'yellow_droppings', g: 'gut', sw: 'Kinyesi cha njano', en: 'Yellow droppings', for: BIRDS },
-  { id: 'vomiting', g: 'gut', sw: 'Kutapika', en: 'Vomiting', for: ['pig', 'dog', 'cat'] },
-  { id: 'bloat', g: 'gut', sw: 'Tumbo kuvimba (upande wa kushoto)', en: 'Swollen belly (left side)', danger: true, for: RUMINANTS },
-  { id: 'red_urine', g: 'gut', sw: 'Mkojo mwekundu au wa rangi ya kahawa', en: 'Red or coffee-coloured urine', for: RUMINANTS },
-  { id: 'constipation', g: 'gut', sw: 'Kufunga choo', en: 'Constipation', for: RUMINANTS },
-
-  { id: 'cough', g: 'breath', sw: 'Kukohoa', en: 'Coughing', for: [...ALL_MAMMALS] },
-  { id: 'hard_breathing', g: 'breath', sw: 'Kupumua kwa shida', en: 'Hard breathing', for: [...ALL_MAMMALS, ...BIRDS] },
-  { id: 'nasal_discharge', g: 'breath', sw: 'Makamasi puani', en: 'Runny nose', for: [...ALL_MAMMALS, ...BIRDS] },
-  { id: 'sneezing', g: 'breath', sw: 'Kupiga chafya', en: 'Sneezing', for: [...BIRDS, 'cat', 'rabbit'] },
-
-  { id: 'mouth_sores', g: 'skin', sw: 'Vidonda au malengelenge mdomoni', en: 'Mouth sores or blisters', for: [...RUMINANTS, 'pig'] },
-  { id: 'drooling', g: 'skin', sw: 'Kutoa mate mengi', en: 'Drooling', for: [...ALL_MAMMALS] },
-  { id: 'skin_lumps', g: 'skin', sw: 'Vivimbe kwenye ngozi', en: 'Lumps on the skin', for: RUMINANTS },
-  { id: 'scabs', g: 'skin', sw: 'Vipele au magamba', en: 'Scabs or crusts', for: [...RUMINANTS, ...BIRDS, 'rabbit'] },
-  { id: 'itching', g: 'skin', sw: 'Kujikuna, nywele kunyonyoka', en: 'Itching, hair loss', for: [...ALL_MAMMALS] },
-  { id: 'eye_discharge', g: 'skin', sw: 'Machozi au usaha machoni', en: 'Eye discharge', for: [...ALL_MAMMALS, ...BIRDS] },
-  { id: 'cloudy_eyes', g: 'skin', sw: 'Macho kuwa na ukungu', en: 'Cloudy eyes', for: ['cattle'] },
-  { id: 'swollen_face', g: 'skin', sw: 'Uso, midomo au ulimi kuvimba', en: 'Swollen face, lips or tongue', for: [...RUMINANTS, ...BIRDS, 'donkey'] },
-  { id: 'purple_skin', g: 'skin', sw: 'Ngozi ya masikio na tumbo kuwa zambarau', en: 'Purple ears and belly skin', for: ['pig'] },
-  { id: 'red_patches', g: 'skin', sw: 'Madoa mekundu ya umbo la almasi', en: 'Red diamond-shaped patches', for: ['pig'] },
-  { id: 'comb_pale', g: 'skin', sw: 'Upanga kupauka', en: 'Pale comb', for: ['chicken', 'turkey', 'guineafowl'] },
-  { id: 'ticks', g: 'skin', sw: 'Kupe wengi', en: 'Many ticks', for: [...RUMINANTS, 'dog', 'donkey'] },
-  { id: 'bottle_jaw', g: 'skin', sw: 'Uvimbe chini ya taya', en: 'Swelling under the jaw', for: ['goat', 'sheep', 'cattle'] },
-
-  { id: 'lame', g: 'move', sw: 'Kuchechemea', en: 'Limping', for: [...ALL_MAMMALS] },
-  { id: 'leg_swelling', g: 'move', sw: 'Mguu au bega kuvimba (linakwaruza likibonywa)', en: 'Swollen leg or shoulder (crackles when pressed)', danger: true, for: ['cattle', 'sheep', 'goat'] },
-  { id: 'twisted_neck', g: 'move', sw: 'Shingo kupinda', en: 'Twisted neck', for: BIRDS },
-  { id: 'trembling', g: 'move', sw: 'Kutetemeka au kifafa', en: 'Trembling or fits', for: [...ALL_MAMMALS, ...BIRDS] },
-  { id: 'aggressive', g: 'move', sw: 'Ukali usio wa kawaida, kuuma vitu', en: 'Unusual aggression, biting things', danger: true, for: ['dog', 'cat', 'cattle', 'goat', 'donkey'] },
-  { id: 'cant_swallow', g: 'move', sw: 'Kushindwa kumeza, taya kulegea', en: "Can't swallow, jaw hanging", danger: true, for: ['dog', 'cat', 'cattle', 'goat'] },
-  { id: 'circling', g: 'move', sw: 'Kuzunguka au kugonga kichwa', en: 'Circling or head pressing', for: RUMINANTS },
-
-  { id: 'abortion', g: 'repro', sw: 'Kutupa mimba', en: 'Abortion', for: [...RUMINANTS, 'pig'] },
-  { id: 'many_abortions', g: 'repro', sw: 'Mimba nyingi kutupwa baada ya mvua nyingi', en: 'Many abortions after heavy rain', danger: true, for: RUMINANTS },
-  { id: 'retained_placenta', g: 'repro', sw: 'Kondo la nyuma kubaki', en: 'Retained afterbirth', for: RUMINANTS },
-  { id: 'udder_swollen', g: 'repro', sw: 'Kiwele kuvimba au kuwa moto', en: 'Swollen or hot udder', for: ['cattle', 'goat', 'sheep', 'camel'] },
-  { id: 'milk_clots', g: 'repro', sw: 'Maziwa yenye mabonge au damu', en: 'Clots or blood in milk', for: ['cattle', 'goat', 'sheep', 'camel'] },
-  { id: 'milk_drop', g: 'repro', sw: 'Maziwa kupungua', en: 'Milk drop', for: ['cattle', 'goat', 'sheep', 'camel'] },
-  { id: 'egg_drop', g: 'repro', sw: 'Mayai kupungua', en: 'Fewer eggs', for: BIRDS },
-]
-
-export const symptomsFor = (animalId) => SYMPTOMS.filter((s) => s.for.includes(animalId))
-export const symptomById = (id) => SYMPTOMS.find((s) => s.id === id)
+export const symptomsFor = (animalId) =>
+  Object.entries(SYMPTOMS)
+    .filter(([, s]) => !s.for || s.for.includes(animalId))
+    .map(([id, s]) => ({ id, ...s }))

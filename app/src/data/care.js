@@ -1,118 +1,120 @@
-// Feeding by growth stage and vaccination / routine care schedules.
-// STATUS: NOT VET-REVIEWED. Amounts are typical guides; local feed labels and extension officers come first.
+// Feeding guides and vaccination schedules. STATUS: NEEDS VET / NUTRITIONIST REVIEW.
+// Amounts are typical guide figures; feed labels and local advice come first.
 
-export const FEEDING = {
-  chicken: {
-    note: { sw: 'Maji safi muda wote. Kuku hunywa maji karibu mara 2 ya chakula.', en: 'Clean water at all times. Birds drink about twice as much as they eat.' },
-    types: [
-      { id: 'broiler', sw: 'Kuku wa nyama (broiler)', en: 'Broilers', stages: [
-        { from: 0, to: 2, unit: 'week', feed: { sw: 'Starter', en: 'Starter' }, gPerDay: [20, 45] },
-        { from: 3, to: 4, unit: 'week', feed: { sw: 'Grower', en: 'Grower' }, gPerDay: [60, 120] },
-        { from: 5, to: 6, unit: 'week', feed: { sw: 'Finisher', en: 'Finisher' }, gPerDay: [140, 180] },
-      ] },
-      { id: 'layer', sw: 'Kuku wa mayai (layer)', en: 'Layers', stages: [
-        { from: 0, to: 8, unit: 'week', feed: { sw: 'Chick mash', en: 'Chick mash' }, gPerDay: [15, 50] },
-        { from: 9, to: 18, unit: 'week', feed: { sw: 'Growers mash', en: 'Growers mash' }, gPerDay: [55, 90] },
-        { from: 19, to: 80, unit: 'week', feed: { sw: 'Layers mash', en: 'Layers mash' }, gPerDay: [110, 130] },
-      ] },
-      { id: 'village', sw: 'Kuku wa kienyeji', en: 'Village chickens', stages: [
-        { from: 0, to: 8, unit: 'week', feed: { sw: 'Chick mash + kuchakura', en: 'Chick mash + scavenging' }, gPerDay: [15, 40] },
-        { from: 9, to: 80, unit: 'week', feed: { sw: 'Kuchakura + nyongeza ya pumba, mahindi, mabaki', en: 'Scavenging + bran, maize, leftovers' }, gPerDay: [40, 70] },
-      ] },
+export const FEEDING = [
+  {
+    id: 'broiler', animal: 'chicken', sw: 'Kuku wa nyama (broiler)', en: 'Broiler chickens', unit: { sw: 'g kwa kuku kwa siku', en: 'g per bird per day' },
+    stages: [
+      { sw: 'Wiki 1–2: Chakula cha kuanzia (starter)', en: 'Weeks 1–2: Starter feed', from: 0, to: 2, perDay: 30 },
+      { sw: 'Wiki 3–4: Chakula cha kukuza (grower)', en: 'Weeks 3–4: Grower feed', from: 3, to: 4, perDay: 90 },
+      { sw: 'Wiki 5–6: Chakula cha kumalizia (finisher)', en: 'Weeks 5–6: Finisher feed', from: 5, to: 8, perDay: 150 },
     ],
+    tips: { sw: ['Maji safi wakati wote', 'Joto kwa vifaranga wiki ya kwanza', 'Wauze wiki 5–6'], en: ['Clean water at all times', 'Keep chicks warm in week one', 'Sell at weeks 5–6'] },
   },
-  cattle: {
-    note: { sw: 'Ng’ombe wa maziwa anahitaji maji lita 50–100 kwa siku.', en: 'A dairy cow needs 50–100 litres of water a day.' },
-    types: [
-      { id: 'dairy', sw: 'Ng’ombe wa maziwa', en: 'Dairy cow', stages: [
-        { from: 0, to: 3, unit: 'month', feed: { sw: 'Maziwa (10% ya uzito wake) + calf pellets kuanzia wiki 2', en: 'Milk (10% of body weight) + calf pellets from week 2' } },
-        { from: 4, to: 24, unit: 'month', feed: { sw: 'Majani mazuri, hay, madini, maji', en: 'Good grass, hay, minerals, water' } },
-        { from: 25, to: 180, unit: 'month', feed: { sw: 'Majani ~10% ya uzito + dairy meal ~1 kg kwa kila lita 2 za maziwa zaidi ya lita 5', en: 'Fodder ~10% of body weight + dairy meal ~1 kg per 2 litres of milk above 5 litres' } },
-      ] },
-      { id: 'beef', sw: 'Ng’ombe wa nyama / kienyeji', en: 'Beef / local cattle', stages: [
-        { from: 0, to: 6, unit: 'month', feed: { sw: 'Kunyonya mama + majani laini', en: 'Suckling + soft grass' } },
-        { from: 7, to: 180, unit: 'month', feed: { sw: 'Malisho, hay wakati wa kiangazi, jiwe la madini', en: 'Grazing, hay in dry season, mineral lick' } },
-      ] },
+  {
+    id: 'layer', animal: 'chicken', sw: 'Kuku wa mayai (layer)', en: 'Layer chickens', unit: { sw: 'g kwa kuku kwa siku', en: 'g per bird per day' },
+    stages: [
+      { sw: 'Wiki 0–8: Chick mash', en: 'Weeks 0–8: Chick mash', from: 0, to: 8, perDay: 35 },
+      { sw: 'Wiki 9–18: Grower mash', en: 'Weeks 9–18: Grower mash', from: 9, to: 18, perDay: 75 },
+      { sw: 'Wiki 19+: Layer mash', en: 'Week 19+: Layer mash', from: 19, to: 100, perDay: 120 },
     ],
+    tips: { sw: ['Ongeza maganda ya konokono kwa ganda imara', 'Mwanga saa 16 kwa siku wakati wa kutaga'], en: ['Add crushed shells for strong eggshells', '16 hours of light a day when laying'] },
   },
-  goat: {
-    note: { sw: 'Mbuzi hupenda kula majani ya miti na vichaka. Weka jiwe la madini.', en: 'Goats prefer browsing shrubs and tree leaves. Provide a mineral lick.' },
-    types: [
-      { id: 'goat', sw: 'Mbuzi', en: 'Goats', stages: [
-        { from: 0, to: 3, unit: 'month', feed: { sw: 'Maziwa ya mama + majani laini kuanzia wiki 2', en: "Mother's milk + soft leaves from week 2" } },
-        { from: 4, to: 12, unit: 'month', feed: { sw: 'Majani, matawi, pumba kidogo (100–200 g)', en: 'Leaves, browse, a little bran (100–200 g)' } },
-        { from: 13, to: 120, unit: 'month', feed: { sw: 'Malisho + 250–500 g pumba kwa mbuzi wa maziwa', en: 'Browse + 250–500 g concentrate for dairy goats' } },
-      ] },
+  {
+    id: 'kienyeji', animal: 'chicken', sw: 'Kuku wa kienyeji', en: 'Village chickens', unit: { sw: 'g ya ziada kwa kuku kwa siku', en: 'extra g per bird per day' },
+    stages: [
+      { sw: 'Vifaranga: chakula cha kuanzia na mchwa', en: 'Chicks: starter feed plus termites', from: 0, to: 8, perDay: 30 },
+      { sw: 'Wakubwa: kuchakura + nyongeza ya pumba na mabaki', en: 'Grown: scavenging plus bran and leftovers', from: 9, to: 100, perDay: 60 },
     ],
+    tips: { sw: ['Wape mboga za majani', 'Banda la usiku lililo salama na safi'], en: ['Give green leaves', 'A safe, clean night house'] },
   },
-  pig: {
-    note: { sw: 'Usilishe mabaki ya chakula yasiyochemshwa (hueneza homa ya nguruwe).', en: 'Never feed uncooked kitchen swill (spreads African swine fever).' },
-    types: [
-      { id: 'pig', sw: 'Nguruwe', en: 'Pigs', stages: [
-        { from: 0, to: 2, unit: 'month', feed: { sw: 'Maziwa ya mama + creep feed', en: "Sow's milk + creep feed" }, gPerDay: [100, 500] },
-        { from: 3, to: 4, unit: 'month', feed: { sw: 'Grower', en: 'Grower' }, gPerDay: [1000, 1800] },
-        { from: 5, to: 8, unit: 'month', feed: { sw: 'Finisher', en: 'Finisher' }, gPerDay: [2000, 3000] },
-      ] },
+  {
+    id: 'dairy', animal: 'cattle', sw: 'Ng’ombe wa maziwa', en: 'Dairy cow', unit: { sw: 'kg ya pumba/concentrate kwa siku', en: 'kg concentrate per day' },
+    stages: [
+      { sw: 'Ndama mwezi 0–3: maziwa lita 4 + majani laini', en: 'Calf 0–3 months: 4 L milk + soft hay', from: 0, to: 3, perDay: 0.5 },
+      { sw: 'Mtamba miezi 4–24: majani mengi + pumba kidogo', en: 'Heifer 4–24 months: plenty of forage + a little concentrate', from: 4, to: 24, perDay: 1 },
+      { sw: 'Anayekamuliwa: kilo 1 kwa kila lita 2 juu ya lita 5', en: 'Milking: 1 kg per 2 L above 5 L', from: 25, to: 300, perDay: 4 },
     ],
+    tips: { sw: ['Majani kilo 10% ya uzito wake kila siku', 'Maji lita 50–100 kwa siku', 'Madini (mineral lick) wakati wote'], en: ['Forage about 10% of body weight daily', '50–100 L of water a day', 'Mineral lick at all times'] },
   },
-  dog: {
-    note: { sw: 'Mbwa hula mara 2 kwa siku (watoto mara 3–4). Usimpe mifupa ya kuku iliyopikwa.', en: 'Adult dogs eat twice a day (puppies 3–4 times). No cooked chicken bones.' },
-    types: [{ id: 'dog', sw: 'Mbwa', en: 'Dogs', stages: [
-      { from: 0, to: 12, unit: 'month', feed: { sw: 'Chakula cha watoto wa mbwa au uji + nyama/samaki', en: 'Puppy food or porridge + meat/fish' } },
-      { from: 13, to: 180, unit: 'month', feed: { sw: 'Ugali/wali + nyama, samaki au dagaa + mboga', en: 'Ugali/rice + meat, fish or sardines + vegetables' } },
-    ] }],
+  {
+    id: 'goat', animal: 'goat', sw: 'Mbuzi', en: 'Goats', unit: { sw: 'g ya pumba kwa siku', en: 'g concentrate per day' },
+    stages: [
+      { sw: 'Kitoto miezi 0–3: maziwa ya mama + majani laini', en: 'Kid 0–3 months: mother’s milk + soft leaves', from: 0, to: 3, perDay: 50 },
+      { sw: 'Anayekua miezi 4–12', en: 'Growing 4–12 months', from: 4, to: 12, perDay: 200 },
+      { sw: 'Mkubwa / mwenye mimba', en: 'Adult / pregnant', from: 13, to: 200, perDay: 400 },
+    ],
+    tips: { sw: ['Wanapenda majani ya miti (kulisha juu)', 'Maji safi kila siku', 'Banda lililoinuka kutoka ardhini'], en: ['They prefer browsing tree leaves', 'Clean water daily', 'A raised house off the ground'] },
   },
-  rabbit: {
-    note: { sw: 'Sungura wanahitaji majani makavu na maji muda wote.', en: 'Rabbits need hay and water at all times.' },
-    types: [{ id: 'rabbit', sw: 'Sungura', en: 'Rabbits', stages: [
-      { from: 0, to: 2, unit: 'month', feed: { sw: 'Maziwa ya mama, kisha majani laini', en: "Mother's milk, then soft greens" } },
-      { from: 3, to: 60, unit: 'month', feed: { sw: 'Majani makavu, mboga, pellets 100–150 g', en: 'Hay, greens, 100–150 g pellets' } },
-    ] }],
+  {
+    id: 'pig', animal: 'pig', sw: 'Nguruwe', en: 'Pigs', unit: { sw: 'kg ya chakula kwa siku', en: 'kg feed per day' },
+    stages: [
+      { sw: 'Kinguruwe wiki 3–8: creep feed', en: 'Piglet weeks 3–8: creep feed', from: 0, to: 2, perDay: 0.5 },
+      { sw: 'Anayekua miezi 2–4', en: 'Grower 2–4 months', from: 2, to: 4, perDay: 1.5 },
+      { sw: 'Kumalizia miezi 5–6', en: 'Finisher 5–6 months', from: 5, to: 7, perDay: 2.5 },
+    ],
+    tips: { sw: ['USIWALISHE mabaki ya nyama bila kuchemsha (huleta homa ya nguruwe)', 'Maji mengi safi'], en: ['NEVER feed uncooked meat scraps (spreads ASF)', 'Plenty of clean water'] },
   },
-}
+  {
+    id: 'dog', animal: 'dog', sw: 'Mbwa', en: 'Dogs', unit: { sw: 'milo kwa siku', en: 'meals per day' },
+    stages: [
+      { sw: 'Mtoto miezi 2–6: milo 3–4', en: 'Puppy 2–6 months: 3–4 meals', from: 0, to: 6, perDay: 4 },
+      { sw: 'Mkubwa: milo 2', en: 'Adult: 2 meals', from: 7, to: 200, perDay: 2 },
+    ],
+    tips: { sw: ['Usimpe mifupa ya kuku iliyopikwa', 'Maji safi wakati wote'], en: ['No cooked chicken bones', 'Clean water at all times'] },
+  },
+]
 
-// age in weeks; repeatEvery in weeks (null = once)
+// Vaccination schedules. `everyDays` = repeat interval; `atDays` = one-off age-based doses.
+// Confirm all dates with the District Veterinary Officer (DVO).
 export const VACCINES = {
   chicken: [
-    { name: { sw: 'Marek', en: "Marek's" }, at: 0, note: { sw: 'Siku ya kwanza (hatchery)', en: 'Day 1 (at hatchery)' } },
-    { name: { sw: 'Kideri (Newcastle)', en: 'Newcastle' }, at: 1, repeatEvery: 12, note: { sw: 'I-2 kila miezi 3', en: 'I-2 every 3 months' } },
-    { name: { sw: 'Gumboro', en: 'Gumboro' }, at: 2, note: { sw: 'Rudia wiki 3 kama daktari ataelekeza', en: 'Repeat at week 3 if advised' } },
-    { name: { sw: 'Ndui ya kuku', en: 'Fowl pox' }, at: 6 },
-    { name: { sw: 'Dawa ya minyoo', en: 'Deworming' }, at: 8, repeatEvery: 12, routine: true },
+    { sw: 'Kideri (I-2)', en: 'Newcastle (I-2)', firstDay: 7, everyDays: 90 },
+    { sw: 'Gumboro dozi 1', en: 'Gumboro dose 1', firstDay: 12 },
+    { sw: 'Gumboro dozi 2', en: 'Gumboro dose 2', firstDay: 24 },
+    { sw: 'Ndui ya kuku', en: 'Fowl pox', firstDay: 42 },
+    { sw: 'Dawa ya minyoo', en: 'Deworming', firstDay: 56, everyDays: 90 },
   ],
   cattle: [
-    { name: { sw: 'Ndigana kali (ITM)', en: 'ECF (ITM)' }, at: 4, note: { sw: 'Mara moja, kwa daktari', en: 'Once, by a vet' } },
-    { name: { sw: 'Brucellosis (ndama wa kike)', en: 'Brucellosis (heifers)' }, at: 13 },
-    { name: { sw: 'Chambavu', en: 'Blackquarter' }, at: 26, repeatEvery: 52 },
-    { name: { sw: 'Kimeta', en: 'Anthrax' }, at: 26, repeatEvery: 52 },
-    { name: { sw: 'Miguu na midomo', en: 'FMD' }, at: 26, repeatEvery: 26 },
-    { name: { sw: 'Ugonjwa wa ngozi (LSD)', en: 'Lumpy skin' }, at: 26, repeatEvery: 52 },
-    { name: { sw: 'Homa ya mapafu (CBPP)', en: 'CBPP' }, at: 26, repeatEvery: 52, note: { sw: 'Kwenye kampeni za serikali', en: 'In government campaigns' } },
-    { name: { sw: 'Kuogesha kupe', en: 'Tick dipping' }, at: 4, repeatEvery: 1, routine: true },
-    { name: { sw: 'Dawa ya minyoo', en: 'Deworming' }, at: 12, repeatEvery: 13, routine: true },
+    { sw: 'Miguu na midomo (FMD)', en: 'FMD', firstDay: 120, everyDays: 180 },
+    { sw: 'Kimeta', en: 'Anthrax', firstDay: 180, everyDays: 365 },
+    { sw: 'Chambavu', en: 'Blackquarter', firstDay: 180, everyDays: 365 },
+    { sw: 'Homa ya mapafu (CBPP)', en: 'CBPP', firstDay: 180, everyDays: 365 },
+    { sw: 'Brucellosis (majike tu, miezi 3–8)', en: 'Brucellosis (heifers, 3–8 months)', firstDay: 120 },
+    { sw: 'Kuogesha / kunyunyizia kupe', en: 'Tick dipping / spraying', firstDay: 30, everyDays: 7 },
+    { sw: 'Dawa ya minyoo', en: 'Deworming', firstDay: 90, everyDays: 90 },
   ],
   goat: [
-    { name: { sw: 'Sotoka (PPR)', en: 'PPR' }, at: 13, repeatEvery: 156 },
-    { name: { sw: 'Homa ya mapafu ya mbuzi (CCPP)', en: 'CCPP' }, at: 13, repeatEvery: 52 },
-    { name: { sw: 'Kimeta', en: 'Anthrax' }, at: 26, repeatEvery: 52 },
-    { name: { sw: 'Dawa ya minyoo', en: 'Deworming' }, at: 8, repeatEvery: 13, routine: true },
+    { sw: 'Sotoka (PPR)', en: 'PPR', firstDay: 90, everyDays: 1095 },
+    { sw: 'Homa ya mapafu ya mbuzi (CCPP)', en: 'CCPP', firstDay: 90, everyDays: 365 },
+    { sw: 'Figo laini', en: 'Enterotoxaemia', firstDay: 60, everyDays: 365 },
+    { sw: 'Dawa ya minyoo', en: 'Deworming', firstDay: 60, everyDays: 90 },
   ],
   sheep: [
-    { name: { sw: 'Sotoka (PPR)', en: 'PPR' }, at: 13, repeatEvery: 156 },
-    { name: { sw: 'Ndui ya kondoo', en: 'Sheep pox' }, at: 13, repeatEvery: 52 },
-    { name: { sw: 'Dawa ya minyoo', en: 'Deworming' }, at: 8, repeatEvery: 13, routine: true },
+    { sw: 'Sotoka (PPR)', en: 'PPR', firstDay: 90, everyDays: 1095 },
+    { sw: 'Figo laini', en: 'Enterotoxaemia', firstDay: 60, everyDays: 365 },
+    { sw: 'Dawa ya minyoo', en: 'Deworming', firstDay: 60, everyDays: 90 },
   ],
   pig: [
-    { name: { sw: 'Erysipelas', en: 'Erysipelas' }, at: 8, repeatEvery: 26 },
-    { name: { sw: 'Dawa ya minyoo', en: 'Deworming' }, at: 6, repeatEvery: 13, routine: true },
+    { sw: 'Erisipela', en: 'Erysipelas', firstDay: 60, everyDays: 180 },
+    { sw: 'Dawa ya minyoo', en: 'Deworming', firstDay: 42, everyDays: 90 },
   ],
   dog: [
-    { name: { sw: 'Distemper / Parvo', en: 'Distemper / Parvo' }, at: 6, note: { sw: 'Rudia wiki 9 na 12', en: 'Repeat at weeks 9 and 12' } },
-    { name: { sw: 'Kichaa cha mbwa', en: 'Rabies' }, at: 12, repeatEvery: 52 },
-    { name: { sw: 'Dawa ya minyoo', en: 'Deworming' }, at: 2, repeatEvery: 13, routine: true },
+    { sw: 'Chanjo ya watoto wa mbwa (distemper, parvo)', en: 'Puppy vaccine (distemper, parvo)', firstDay: 56 },
+    { sw: 'Kichaa cha mbwa', en: 'Rabies', firstDay: 90, everyDays: 365 },
+    { sw: 'Dawa ya minyoo', en: 'Deworming', firstDay: 21, everyDays: 90 },
   ],
   cat: [
-    { name: { sw: 'Panleukopenia / mafua', en: 'Panleukopenia / cat flu' }, at: 8, note: { sw: 'Rudia wiki 12', en: 'Repeat at week 12' } },
-    { name: { sw: 'Kichaa cha mbwa', en: 'Rabies' }, at: 12, repeatEvery: 52 },
+    { sw: 'Chanjo ya watoto wa paka', en: 'Kitten vaccine', firstDay: 56 },
+    { sw: 'Kichaa cha mbwa', en: 'Rabies', firstDay: 90, everyDays: 365 },
   ],
 }
+
+export const CONTACTS = [
+  { sw: 'Afisa Mifugo wa Wilaya (DVO)', en: 'District Veterinary Officer (DVO)', detail: { sw: 'Ofisi ya Halmashauri ya wilaya yako. Kwanza kwa magonjwa ya kuripotiwa.', en: 'Your district council office. First stop for reportable diseases.' } },
+  { sw: 'Afisa Ugani wa Kata', en: 'Ward Extension Officer', detail: { sw: 'Ushauri wa karibu kuhusu ufugaji na chanjo.', en: 'Local advice on keeping animals and vaccines.' } },
+  { sw: 'TVLA (Wakala wa Maabara ya Veterinari)', en: 'TVLA (Veterinary Laboratory Agency)', detail: { sw: 'Maabara za kanda: Arusha, Mwanza, Dodoma, Tanga, Iringa, Mtwara na nyingine. Chanjo za I-2, CAPRIVAC, BOVIVAC. tvla.go.tz', en: 'Zonal labs: Arusha, Mwanza, Dodoma, Tanga, Iringa, Mtwara and more. I-2, CAPRIVAC, BOVIVAC vaccines. tvla.go.tz' } },
+  { sw: 'SUA (Chuo Kikuu cha Kilimo Sokoine)', en: 'SUA (Sokoine University of Agriculture)', detail: { sw: 'Hospitali ya wanyama na utafiti, Morogoro.', en: 'Veterinary hospital and research, Morogoro.' } },
+  { sw: 'Baraza la Veterinari Tanzania (VCT)', en: 'Veterinary Council of Tanzania (VCT)', detail: { sw: 'Kuhakikisha daktari amesajiliwa.', en: 'Check that a vet is registered.' } },
+  { sw: 'Wizara ya Mifugo na Uvuvi', en: 'Ministry of Livestock and Fisheries', detail: { sw: 'Miongozo na kampeni za chanjo. mifugouvuvi.go.tz', en: 'Guidelines and vaccination campaigns. mifugouvuvi.go.tz' } },
+]

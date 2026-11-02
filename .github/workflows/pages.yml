@@ -1,0 +1,42 @@
+name: Deploy FugaBora to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - run: npm ci
+      - name: Build
+        run: npm run build
+        env:
+          VITE_BASE: ./
+          VITE_ROUTER: hash
+          # Publishable key: safe to be public. Row Level Security protects the data.
+          VITE_SUPABASE_URL: https://xixnfkefsbbwjicrcmgk.supabase.co
+          VITE_SUPABASE_ANON_KEY: sb_publishable_sofikt8Ui2JKDFALOaoa3w_19LGeKnr
+      - run: touch dist/.nojekyll
+      - name: Publish to gh-pages branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: app/dist

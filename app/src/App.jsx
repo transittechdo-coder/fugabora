@@ -1,42 +1,36 @@
-import { HashRouter, Routes, Route, Link } from 'react-router-dom'
-import { LangProvider, useLang } from './lib/i18n.jsx'
+import { BrowserRouter, HashRouter, MemoryRouter, Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
 import Home from './pages/Home.jsx'
-import Check from './pages/Check.jsx'
-import { DiseaseList, DiseaseDetail } from './pages/Diseases.jsx'
+import Checker from './pages/Checker.jsx'
+import { DiseaseDetail, DiseaseList } from './pages/Diseases.jsx'
 import Feeding from './pages/Feeding.jsx'
 import MyAnimals from './pages/MyAnimals.jsx'
+import Help from './pages/Help.jsx'
 import About from './pages/About.jsx'
+import { LangProvider } from './lib/i18n.jsx'
 
-function NotFound() {
-  const { t } = useLang()
-  return (
-    <div className="glass panel empty">
-      <h1 className="h1">404</h1>
-      <p>{t({ sw: 'Ukurasa huu haupo.', en: 'This page does not exist.' })}</p>
-      <Link className="btn primary" to="/">{t({ sw: 'Rudi mwanzo', en: 'Go home' })}</Link>
-    </div>
-  )
-}
+// VITE_ROUTER: "browser" for a real host (Netlify), "hash" for GitHub Pages, "memory" for the single-file preview.
+const mode = import.meta.env.VITE_ROUTER || 'browser'
+const Router = mode === 'memory' ? MemoryRouter : mode === 'hash' ? HashRouter : BrowserRouter
 
 export default function App() {
   return (
     <LangProvider>
-      {/* HashRouter: works on any static host (GitHub Pages, Netlify) and offline without server config */}
-      <HashRouter>
+      <Router>
         <Routes>
           <Route element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="kagua" element={<Check />} />
+            <Route path="angalia" element={<Checker />} />
             <Route path="magonjwa" element={<DiseaseList />} />
             <Route path="magonjwa/:id" element={<DiseaseDetail />} />
             <Route path="lishe" element={<Feeding />} />
             <Route path="mifugo-yangu" element={<MyAnimals />} />
+            <Route path="msaada" element={<Help />} />
             <Route path="kuhusu" element={<About />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<Home />} />
           </Route>
         </Routes>
-      </HashRouter>
+      </Router>
     </LangProvider>
   )
 }

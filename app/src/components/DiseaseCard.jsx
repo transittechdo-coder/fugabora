@@ -1,45 +1,37 @@
 import { Link } from 'react-router-dom'
-import { useLang, S } from '../lib/i18n.jsx'
-import Icon from './Icon.jsx'
+import { LEVELS } from '../data/diseases.js'
+import { useLang } from '../lib/i18n.jsx'
 
-export function LevelPill({ level }) {
-  const { t } = useLang()
-  return <span className={`pill ${level}`}>{t(S.levels[level])}</span>
-}
+export const levelClass = (lvl) => ({ red: 'red', amber: 'amber', green: 'green' }[lvl])
 
-export function Flags({ d }) {
-  const { t } = useLang()
-  if (!d.zoonotic && !d.notifiable) return null
+export function Badges({ d }) {
+  const { t, tx } = useLang()
   return (
-    <div className="flags">
-      {d.zoonotic && <span className="pill violet"><Icon name="people" size={14} /> {t(S.zoonotic)}</span>}
-      {d.notifiable && <span className="pill slate"><Icon name="bell" size={14} /> {t(S.notifiable)}</span>}
-    </div>
+    <span className="row" style={{ gap: 6 }}>
+      <span className={`pill ${levelClass(d.level)}`}>{tx(LEVELS[d.level])}</span>
+      {d.zoonotic && <span className="pill gold">{t('Huambukiza binadamu', 'Spreads to people')}</span>}
+      {d.notifiable && <span className="pill neutral">{t('Ripoti saa 24', 'Report in 24h')}</span>}
+    </span>
   )
 }
 
-export default function DiseaseCard({ d, score, children, compact }) {
-  const { t } = useLang()
+export default function DiseaseCard({ d, score, children }) {
+  const { t, tx } = useLang()
   return (
-    <article className={`dcard glass lvl-${d.level}`}>
-      <header>
-        <div>
-          <h3>{t(d.names)}</h3>
-          {!compact && <p className="muted small">{d.local.slice(0, 3).join(' · ')}</p>}
-        </div>
-        <LevelPill level={d.level} />
-      </header>
+    <article className="card glass solid">
+      <div className="spread">
+        <h3>{tx(d.name)}</h3>
+        <Badges d={d} />
+      </div>
+      <p className="muted">{tx(d.desc)}</p>
       {score != null && (
-        <div className="meter" role="meter" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(score * 100)}>
-          <i style={{ width: `${Math.round(score * 100)}%` }} />
+        <div className="stack" style={{ gap: 4 }}>
+          <div className="spread small muted"><span>{t('Ulinganifu', 'Match')}</span><span>{Math.round(score * 100)}%</span></div>
+          <div className="meter" role="img" aria-label={`${Math.round(score * 100)}%`}><i style={{ width: `${Math.round(score * 100)}%` }} /></div>
         </div>
       )}
-      <p>{t(d.about)}</p>
-      <Flags d={d} />
       {children}
-      <Link className="link" to={`/magonjwa/${d.id}`}>
-        {t({ sw: 'Soma zaidi', en: 'Read more' })} <Icon name="arrowR" size={16} />
-      </Link>
+      <Link to={`/magonjwa/${d.id}`} className="small">{t('Soma zaidi', 'Read more')}</Link>
     </article>
   )
 }

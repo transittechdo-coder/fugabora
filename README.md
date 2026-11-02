@@ -24,7 +24,7 @@ Built by the Mikocheni B group (Form Five, PMCs).
 - **Code editor:** VS Code
 - **Database and logins:** Supabase project `fugabora`
 - **Code storage and history:** GitHub repository `fugabora`
-- **Hosting:** to be decided (Netlify or GitHub Pages)
+- **Hosting:** GitHub Pages, deployed automatically on every push to `main` (see `.github/workflows/pages.yml`)
 
 ## Build order
 
